@@ -1,3 +1,4 @@
+def img
 pipeline {
     environment {
         registry = "dvorkinguy/flask-dashboard"
@@ -27,7 +28,7 @@ pipeline {
         stage('Test - Run Docker Container on Jenkins node') {
             steps {
                 sh label: '', script: "docker run -d --name flask-dashboard-ci -p 5000:5000 ${img}"
-    }
+                }
             }            
         }
 
