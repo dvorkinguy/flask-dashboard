@@ -7,13 +7,12 @@ pipeline {
     agent {
         label 'jenkins_worker' // Use the label of the desired node
     }
-            
+    stages {
         stage('checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/dvorkinguy/flask-dashboard.git'
-           }
+            }
         }
-
 
         stage('Build Image') {
             steps {
