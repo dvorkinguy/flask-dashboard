@@ -23,7 +23,6 @@ pipeline {
             }
         }
 
-
         stage('Build Image') {
             steps {
                 script {
@@ -34,24 +33,20 @@ pipeline {
             }
         }
 
-
-
         stage('Test - Run Docker Container on Jenkins node') {
-           steps {
-
+            steps {
                 sh label: '', script: "docker run -d --name ${JOB_NAME} -p 5000:5000 ${img}"
-          }
+            }
         }
 
         stage('Push To DockerHub') {
             steps {
                 script {
-                    docker.withRegistry( 'https://registry.hub.docker.com ', registryCredential ) {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                         dockerImage.push()
                     }
                 }
             }
         }
-
-        
     }
+}
