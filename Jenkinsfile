@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "dvorkinguy/flask-dashboard"
-        registryCredential = credentials('jenkins-09-ec2') // Reference the credential ID
+        registryCredential = 'docker-hub-credentials' // Reference the credential ID
         dockerImage = ''
     }
     agent {
