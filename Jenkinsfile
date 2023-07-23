@@ -4,13 +4,16 @@ pipeline {
         registryCredential = 'docker-hub-credentials' // Reference the credential ID
         dockerImage = ''
     }
-    agent any
-    stages {
+    agent {
+        label 'jenkins_worker' // Use the label of the desired node
+    }
+            
         stage('checkout') {
             steps {
-                git 'https://github.com/dvorkinguy/flask-dashboard.git'
-            }
+                git branch: 'main', url: 'https://github.com/dvorkinguy/flask-dashboard.git'
+           }
         }
+
 
         stage('Build Image') {
             steps {
