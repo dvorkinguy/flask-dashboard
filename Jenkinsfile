@@ -4,9 +4,7 @@ pipeline {
         registryCredential = 'docker-hub-credentials' // Reference the credential ID
         dockerImage = ''
     }
-    agent {
-        label 'jenkins_worker' // Use the label of the desired node
-    }
+    agent any
     stages {
         stage('checkout') {
             steps {
