@@ -35,6 +35,8 @@ pipeline {
 
         stage('Test - Run Docker Container on Jenkins node') {
             steps {
+                sh label: '', script: "docker stop flask-dashboard-ci || true"
+                sh label: '', script: "docker rm flask-dashboard-ci || true"
                 sh label: '', script: "docker run -d --name flask-dashboard-ci -p 5000:5000 ${img}"
             }
         }
