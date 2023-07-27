@@ -33,3 +33,4 @@ apps/static/assets/.temp
 
 migrations
 /venv/
+Jenkinsfile_old

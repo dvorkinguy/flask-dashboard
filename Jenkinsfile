@@ -26,7 +26,11 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    img = registry + ":${env.BUILD_ID}"
+                    def buildTag = "latest" // Set the default tag as "latest"
+                    if (env.BUILD_ID) {
+                        buildTag = "build-${env.BUILD_ID}" // Use build number as the tag
+                    }
+                    img = "${registry}:${buildTag}"
                     println ("${img}")
                     dockerImage = docker.build("${img}")
                 }
@@ -45,6 +49,9 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+                        dockerImage.push()
+                        // Also tag the image as 'latest' and push it
+                        dockerImage.tag("${registry}:latest")
                         dockerImage.push()
                     }
                 }
