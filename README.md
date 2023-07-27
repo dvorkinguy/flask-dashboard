@@ -38,6 +38,7 @@ $ cd flask-volt-dashboard
 
 > 👉 **Step 2** - Start the APP in `Docker`
 
+
 ```bash
 $ docker-compose up --build 
 ```
