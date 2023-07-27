@@ -1,5 +1,4 @@
 def img
-
 pipeline {
     environment {
         registry = "dvorkinguy/flask-dashboard" // To push an image to Docker Hub, you must first name your local image using your Docker Hub username and the repository name that you created through Docker Hub on the web.
@@ -13,6 +12,14 @@ pipeline {
         stage('checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/dvorkinguy/flask-dashboard.git'
+            }
+        }
+
+        stage ('Stop previous running container'){
+            steps{
+                sh returnStatus: true, script: 'docker stop ${JOB_NAME}'
+                sh returnStatus: true, script: 'docker rmi $(docker images | grep ${registry} | awk \'{print $3}\') --force'
+                sh returnStatus: true, script: 'docker rm ${JOB_NAME}'
             }
         }
 
