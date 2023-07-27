@@ -1,7 +1,8 @@
 def img
+
 pipeline {
     environment {
-        registry = "dvorkinguy/flask-dashboard" // To push an image to Docker Hub, you must first name your local image using your Docker Hub username and the repository name that you created through Docker Hub on the web.
+        registry = "dvorkinguy/flask-dashboard" //To push an image to Docker Hub, you must first name your local image using your Docker Hub username and the repository name that you created through Docker Hub on the web.
         registryCredential = 'docker-hub-credentials'
         dockerImage = ''
     }
@@ -26,7 +27,8 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    img = registry + ":${env.BUILD_NUMBER}" // Use the build number as the tag
+                    // Tag the image with the build number
+                    img = registry + ":build-${env.BUILD_NUMBER}"
                     println ("${img}")
                     dockerImage = docker.build("${img}")
                 }
@@ -45,7 +47,10 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                        dockerImage.push("${registry}:${buildTag}")
+                        // Push the image tagged with the build number
+                        dockerImage.push()
+
+                        // Tag the image with 'latest' and push it
                         dockerImage.tag("${img}", "${registry}:latest")
                         dockerImage.push("${registry}:latest")
                     }
