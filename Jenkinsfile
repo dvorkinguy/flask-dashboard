@@ -47,7 +47,12 @@ pipeline {
                     docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                         dockerImage.push()
 
-                        // Tag and push the image as 'latest'
+                        // Tag the image with the build number and push it
+                        def buildTag = "build-${env.BUILD_NUMBER}"
+                        dockerImage.tag("${img}", "${registry}:${buildTag}")
+                        dockerImage.push("${registry}:${buildTag}")
+
+                        // Update the 'latest' tag to point to the new image
                         dockerImage.tag("${img}", "${registry}:latest")
                         dockerImage.push("${registry}:latest")
                     }
