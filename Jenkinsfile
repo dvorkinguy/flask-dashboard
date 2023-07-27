@@ -26,7 +26,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    img = registry + ":build-${env.BUILD_NUMBER}" // Use the build number as the tag
+                    img = registry + ":${env.BUILD_NUMBER}" // Use the build number as the tag
                     println ("${img}")
                     dockerImage = docker.build("${img}")
                 }
