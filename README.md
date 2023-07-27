@@ -83,6 +83,8 @@ $ cd flask-volt-dashboard
 
 ```bash
 $ virtualenv env
+$ source venv/bin/activate
+
 $ source env/bin/activate
 $ pip3 install -r requirements.txt
 

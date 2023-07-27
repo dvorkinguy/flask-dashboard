@@ -17,3 +17,4 @@ blinker==1.4
 pyOpenSSL
 Flask-Prometheus
 flask_migrate
+prometheus-flask-exporter==0.22.4
