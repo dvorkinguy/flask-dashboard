@@ -14,20 +14,4 @@ scrape_configs:
   - job_name: 'flask-dashboard'
     scrape_interval: 5s
     static_configs:
-      - targets: ['flask-dashboard-service:31598']
-
-# ServiceMonitor section for additional labels
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: flask-dashboard-monitor  # Replace with a meaningful name for the ServiceMonitor
-  labels:
-    release: prometheus  # Add the release label here
-spec:
-  selector:
-    matchLabels:
-      app: flask-dashboard  # Replace with the labels used for your Flask application
-  endpoints:
-    - port: 5000
-
+      - targets: ['localhost:31598']  # Replace with your Flask app's endpoint
