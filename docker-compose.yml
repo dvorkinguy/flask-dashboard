@@ -7,6 +7,11 @@ services:
     networks:
       - db_network
       - web_network
+    ports:
+      - "5000:5000"  # Map Flask app's internal port to a host port for access
+    environment:
+      - prometheus_multiproc_dir=/metrics  # Required for Prometheus Flask Exporter
+
   nginx:
     container_name: nginx
     restart: always
@@ -19,9 +24,29 @@ services:
       - web_network
     depends_on: 
       - appseed-app
+
+  prometheus:
+    container_name: prometheus
+    restart: always
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"  # Prometheus UI port
+    volumes:
+      - ./prometheus:/etc/prometheus  # Mount the Prometheus config
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  grafana:
+    container_name: grafana
+    restart: always
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"  # Grafana UI port
+    volumes:
+      - ./grafana:/etc/grafana  # Mount the Grafana config
+
 networks:
   db_network:
     driver: bridge
   web_network:
     driver: bridge
- 
