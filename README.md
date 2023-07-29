@@ -34,7 +34,6 @@ $ git clone https://github.com/app-generator/flask-volt-dashboard.git
 $ cd flask-volt-dashboard
 ```
 
-
 <br />
 
 > 👉 **Step 2** - Start the APP in `Docker`
